@@ -1,0 +1,62 @@
+---------------------------------------------------------
+R1-SW1
+========
+conf t
+hostname R1-SW1
+no ip domain-lookup
+	line console 0
+logging synchronous
+---------------------------------------------------------
+R2-SW1
+========
+conf t
+hostname R2-SW1
+no ip domain-lookup
+line console 0
+	logging synchronous
+enable secret It#H
+line console 0
+	password It#H
+service password-encryption
+---------------------------------------------------------
+R3-SW1
+========
+conf t
+hostname R3-SW1
+no ip domain-lookup
+line console 0
+	logging synchronous
+enable secret It#H
+
+username PC1 privilege 0 secret 11
+username PC2 privilege 0 secret 22
+username PC3 privilege 0 secret 33
+username PC4 privilege 0 secret 44
+username PC5 privilege 0 secret 55
+
+line console 0
+	login local
+---------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------------------------------
+First room problem: no password configuration to enter the switch. The presence of an additional port and lack of control over it
+
+Exploit: Anyone can connect to the network with a network cable and can access the switch with a console cable.
+
+--------------------------------------------------------------------------------------------------------------
+
+Second room problem: Only one password is used to connect to the switch. The presence of an additional port and lack of control over it
+
+Exploit: Anyone with a network cable can connect to the network. Five users know the switch login password, so a hacker can access the switch login password from any of them.
+Due to the existence of a single password, after connecting (Console cable), the hacker can have direct access to "User EXEC mode" without any problems and view the information of the switch.
+
+--------------------------------------------------------------------------------------------------------------
+
+Third room problem: Additional ports were removed from the switch and only the number of clients is considered. To access the switch, each user has a username and password.
+
+Exploit: The hacker cannot connect to our network with a network cable.
+Due to the use of username and password for each user, the hacker cannot access "User EXEC mode" after connecting the console cable.
+The hacker must know the username and password of someone who has console access to the switch.
+
+--------------------------------------------------------------------------------------------------------------
